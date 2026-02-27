@@ -4,8 +4,8 @@ public class Scheduler extends User {
     private String staffID;
 
     //Parameterized Constructor
-    public Scheduler(String userID, String name, String email, String password, String phone, String staffID) {
-        super(userID, name, email, password, phone);
+    public Scheduler(String userID, String name, String email, String password, String phone,  boolean isBlocked, UserRole role, String staffID) {
+        super(userID, name, email, password, phone, isBlocked, role);
         this.staffID = staffID;
     }
 
@@ -40,5 +40,16 @@ public class Scheduler extends User {
     }
     public void setMaintenance(){
 
+    }
+    @Override
+    public String toFileFormat(){
+        return getUserID()+ "|" +
+                getName() + "|" +
+                getEmail() + "|" +
+                getPassword() + "|" +
+                getPhone() + "|" +
+                isBlocked() + "|" +
+                getRole() + "|" +
+                staffID;
     }
 }

@@ -7,15 +7,17 @@ public abstract class User {
     private String password;
     private String phone;
     private boolean isBlocked;
+    private UserRole role;
 
     //Parameterized Constructor
-    public User(String userID, String name, String email, String password, String phone) {
+    public User(String userID, String name, String email, String password, String phone, boolean isBlocked, UserRole role) {
         this.userID = userID;
         this.name = name;
         this.email = email;
         this.password = password;
         this.phone = phone;
         this.isBlocked = false;
+        this.role = role;
     }
 
     //Getter and Setter for all the fields
@@ -68,12 +70,22 @@ public abstract class User {
         isBlocked = blocked;
     }
 
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
     // login and logout methods
-  public boolean login(String inputId, String inputPass){
+    public boolean login(String inputId, String inputPass) {
         return this.userID.equals(inputId) && this.password.equals(inputPass);
     }
 
-    public void logout(){
+    public void logout() {
         System.out.println(userID + "has logged off.");
     }
+
+    public abstract String toFileFormat();
 }

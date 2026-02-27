@@ -4,8 +4,8 @@ public class Customer extends User {
     private String address;
 
     //Parameterized Constructor
-    public Customer(String userID, String name, String email, String password, String phone, String address) {
-        super(userID, name, email, password, phone);
+    public Customer(String userID, String name, String email, String password, String phone,  boolean isBlocked, UserRole role, String address) {
+        super(userID, name, email, password, phone, isBlocked, role);
         this.address = address;
     }
 
@@ -45,6 +45,18 @@ public class Customer extends User {
     }
     public boolean canCancel(Booking booking){
         return true;
+    }
+
+    @Override
+    public String toFileFormat(){
+        return getUserID()+ "|" +
+                getName() + "|" +
+                getEmail() + "|" +
+                getPassword() + "|" +
+                getPhone() + "|" +
+                isBlocked() + "|" +
+                getRole() + "|" +
+                address;
     }
 
 }

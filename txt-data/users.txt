@@ -1,0 +1,4 @@
+A001|Lucky Rajkarnikar|admin@system.com|admin123|9866046898|false|ADMIN|ADM-01
+C001|Shital Shahi|shisha@gmail.com|pass123|9865471002|false|Thaiba
+M001|Prashant Deuja|deuja@work.com|mgr123|9761204457|false|MGR-03
+S001|Prabin Shrestha|ps@work.com|stf123|9874511203|false|SRF-4

@@ -4,8 +4,8 @@ public class Administrator extends User {
     private String adminID;
 
     //Parameterized Constructor
-    public Administrator(String userID, String name, String email, String password, String phone, String adminID) {
-        super(userID, name, email, password, phone);
+    public Administrator(String userID, String name, String email, String password, String phone,  boolean isBlocked, UserRole role, String adminID) {
+        super(userID, name, email, password, phone, isBlocked, role);
         this.adminID = adminID;
     }
 
@@ -34,5 +34,16 @@ public class Administrator extends User {
 
     public void viewAllBookings() {
 
+    }
+    @Override
+    public String toFileFormat(){
+        return getUserID()+ "|" +
+                getName() + "|" +
+                getEmail() + "|" +
+                getPassword() + "|" +
+                getPhone() + "|" +
+                isBlocked() + "|" +
+                getRole() + "|" +
+                adminID;
     }
 }

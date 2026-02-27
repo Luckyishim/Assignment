@@ -4,8 +4,8 @@ public class Manager extends User {
     private String managerID;
 
     //Parameterized Constructor
-    public Manager(String userID, String name, String email, String password, String phone, String managerID) {
-        super(userID, name, email, password, phone);
+    public Manager(String userID, String name, String email, String password, String phone, boolean isBlocked, UserRole role, String managerID) {
+        super(userID, name, email, password, phone, isBlocked, role);
         this.managerID = managerID;
     }
     //Getter and Setter for all the fields
@@ -31,8 +31,19 @@ public class Manager extends User {
 
     }
 
-//    public void updateIssueStatus(Issue issue, IssueStatus newStatus) {
+    //    public void updateIssueStatus(Issue issue, IssueStatus newStatus) {
 //    issue.setStatus(newStatus);
 //
 //    }
+    @Override
+    public String toFileFormat() {
+        return getUserID() + "|" +
+                getName() + "|" +
+                getEmail() + "|" +
+                getPassword() + "|" +
+                getPhone() + "|" +
+                isBlocked() + "|" +
+                getRole() + "|" +
+                managerID;
+    }
 }
