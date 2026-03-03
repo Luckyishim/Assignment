@@ -1,82 +1,56 @@
 package models;
 
 public class Hall {
-    private String hallID;
+
+    private String hallId;
     private String hallName;
-    private String hallType;
+    private String hallType; // AUDITORIUM, BANQUET_HALL, MEETING_ROOM
     private int capacity;
     private double ratePerHour;
 
-    //Parameterized Constructor
-    public Hall(String hallID, String hallName, String hallType) {
-        this.hallID = hallID;
+    public Hall(String hallId, String hallName, String hallType) {
+        this.hallId = hallId;
         this.hallName = hallName;
         this.hallType = hallType;
-
-
-        assignRules();
+        setCapacityAndRate(); // auto set based on type
     }
 
-    //Assigning different hall types and their information
-    private void assignRules() {
-        switch (this.hallType.toLowerCase()) {
-            case "auditorium":
-                this.capacity = 1000;
-                this.ratePerHour = 300.00;
-                break;
-            case "banquet hall":
-                this.capacity = 300;
-                this.ratePerHour = 100.00;
-                break;
-            case "meeting room":
-                this.capacity = 30;
-                this.ratePerHour = 50.00;
-                break;
-            default:
-                this.capacity = 0;
-                this.ratePerHour = 0;
-                break;
+    // set capacity and rate based on hall type from the question
+    private void setCapacityAndRate() {
+        if (hallType.equals("AUDITORIUM")) {
+            capacity = 1000;
+            ratePerHour = 300.0;
+        } else if (hallType.equals("BANQUET_HALL")) {
+            capacity = 300;
+            ratePerHour = 100.0;
+        } else if (hallType.equals("MEETING_ROOM")) {
+            capacity = 30;
+            ratePerHour = 50.0;
         }
     }
 
-    //Getter and Setter for all fields
+    // getters
+    public String getHallId() { return hallId; }
+    public String getHallName() { return hallName; }
+    public String getHallType() { return hallType; }
+    public int getCapacity() { return capacity; }
+    public double getRatePerHour() { return ratePerHour; }
 
-    public String getHallID() {
-        return hallID;
-    }
-
-    public void setHallID(String hallID) {
-        this.hallID = hallID;
-    }
-
-    public String getHallName() {
-        return hallName;
-    }
-
-    public void setHallName(String hallName) {
-        this.hallName = hallName;
-    }
-
-    public String getHallType() {
-        return hallType;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public double getRatePerHour() {
-        return ratePerHour;
-    }
-
+    // setters
+    public void setHallName(String hallName) { this.hallName = hallName; }
     public void setHallType(String hallType) {
         this.hallType = hallType;
-        assignRules();
+        setCapacityAndRate(); // recalculate when type changes
     }
 
+    // format: hallId|hallName|hallType|capacity|ratePerHour
+    public String toFileString() {
+        return hallId + "|" + hallName + "|" + hallType + "|" + capacity + "|" + ratePerHour;
+    }
 
-    //Methods for Halls
-    public boolean isAvailable(){
-        return true;
+    // rebuild Hall object from a line in halls.txt
+    public static Hall fromFileString(String line) {
+        String[] parts = line.split("\\|");
+        return new Hall(parts[0], parts[1], parts[2]);
     }
 }

@@ -1,0 +1,2 @@
+ISS1|CUS1|BOK1|The projector in the hall is not working|We will fix it ASAP|SCR1|IN_PROGRESS
+ISS2|CUS2|BOK2|Air conditioning too cold|Noted, will adjust|None|DONEISS1|CUS1|BOK1|Hmm i didn't get coke|No response yet|None|IN_PROGRESS

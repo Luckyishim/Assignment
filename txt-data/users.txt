@@ -1,4 +1,5 @@
-A001|Lucky Rajkarnikar|admin@system.com|admin123|9866046898|false|ADMIN|ADM-01
-C001|Shital Shahi|shisha@gmail.com|pass123|9865471002|false|Thaiba
-M001|Prashant Deuja|deuja@work.com|mgr123|9761204457|false|MGR-03
-S001|Prabin Shrestha|ps@work.com|stf123|9874511203|false|SRF-4
+CUS1|Ali|ali@gmail.com|123456|0123456789|CUSTOMER|Kuala Lumpur|false
+CUS2|Sarah|sarah@gmail.com|password1|0187654321|CUSTOMER|Petaling Jaya|false
+SCR1|John|john@gmail.com|staffpass|0112233445|SCHEDULER|STF1
+ADM1|Admin|admin@gmail.com|adminpass|0199999999|ADMIN|ADM1
+MGR1|Boss|boss@gmail.com|bosspass|0111111111|MANAGER|MGR1

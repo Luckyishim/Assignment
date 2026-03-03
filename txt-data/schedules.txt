@@ -1,0 +1,3 @@
+SCH1|HAL1|AVAILABILITY|01-04-2025 08:00|01-04-2025 18:00|Hall open for booking
+SCH2|HAL2|AVAILABILITY|05-04-2025 09:00|05-04-2025 17:00|Available for events
+SCH3|HAL1|MAINTENANCE|10-04-2025 08:00|10-04-2025 12:00|Air conditioning check and lighting repairs

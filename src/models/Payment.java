@@ -1,47 +1,37 @@
 package models;
 
-import java.time.LocalDateTime;
-
 public class Payment {
-    private String paymentID;
-    private String bookingID;
+
+    private String paymentId;
+    private String bookingId;
     private double amount;
-    private String paymentMethod;
-    private LocalDateTime paymentDate;
+    private String paymentDate; // "dd-MM-yyyy"
+    private String paymentMethod; // CASH, CARD, ONLINE
 
-    //Parameterized Constructor
-    public Payment(String payID, Booking booking, String method){
-        this.paymentID = payID;
-        this.bookingID = booking.getBookingID();
-        this.amount = booking.getTotalAmount();
-        this.paymentMethod = method;
-        this.paymentDate = LocalDateTime.now();
+    public Payment(String paymentId, String bookingId, double amount,
+                   String paymentDate, String paymentMethod) {
+        this.paymentId = paymentId;
+        this.bookingId = bookingId;
+        this.amount = amount;
+        this.paymentDate = paymentDate;
+        this.paymentMethod = paymentMethod;
     }
 
-    //Getter for all fields
+    // getters
+    public String getPaymentId() { return paymentId; }
+    public String getBookingId() { return bookingId; }
+    public double getAmount() { return amount; }
+    public String getPaymentDate() { return paymentDate; }
+    public String getPaymentMethod() { return paymentMethod; }
 
-    public String getPaymentID() {
-        return paymentID;
+    // format: paymentId|bookingId|amount|paymentDate|paymentMethod
+    public String toFileString() {
+        return paymentId + "|" + bookingId + "|" + amount + "|" + paymentDate + "|" + paymentMethod;
     }
 
-    public String getBookingID() {
-        return bookingID;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public LocalDateTime getPaymentDate() {
-        return paymentDate;
-    }
-
-    //Method for payment
-    public void generateReceipts(){
-
+    // rebuild Payment object from a line in payments.txt
+    public static Payment fromFileString(String line) {
+        String[] parts = line.split("\\|");
+        return new Payment(parts[0], parts[1], Double.parseDouble(parts[2]), parts[3], parts[4]);
     }
 }

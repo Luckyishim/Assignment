@@ -1,65 +1,118 @@
 package utils;
 
-import models.*;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class FileHandler {
+// base file handler - all other file handlers use these core methods
+public class FileHandler {
 
-    //Path to the .txt folder
-    private static final String FOLDER_PATH = "txt-data/";
+    // read all lines from a file, returns empty list if file doesnt exist
+    public static List<String> readAll(String filename) {
+        List<String> lines = new ArrayList<>();
+        try {
+            File file = new File(filename);
+            if (!file.exists()) return lines; // just return empty if no file yet
 
-    //If folder not found we create
-    public static void checkFolder() {
-        File folder = new File(FOLDER_PATH);
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
-    }
-
-    //To write in the .txt giles
-    public static void saveToFiles(String filename, String content) {
-        checkFolder();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FOLDER_PATH + filename, true))) {
-            writer.write(content);
-            writer.newLine();
-
-        } catch (IOException e) {
-            System.out.println("Error in saving the data:" + e.getMessage());
-        }
-    }
-
-
-    //To read from the .txt files
-    public static List<String> readFromFile(String filename) {
-        List<String> data = new ArrayList<>();
-        File file = new File(FOLDER_PATH + filename);
-
-        if (!file.exists()) {
-            return data;
-        }
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
             String line;
             while ((line = reader.readLine()) != null) {
-                data.add(line);
+                if (!line.trim().isEmpty()) {
+                    lines.add(line);
+                }
             }
+            reader.close();
         } catch (IOException e) {
-            System.out.println("Error in reading the file: " + e.getMessage());
+            System.out.println("Error reading file: " + filename);
         }
-        return data;
+        return lines;
     }
 
-    //To write inside the .txt files
-    public static void writeToFile(String filename, List<String> data) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(FOLDER_PATH + filename))) {
-            for (String line : data) {
-                writer.println(line);
+    // write a single new line at the end of the file
+    public static void appendLine(String filename, String data) {
+        try {
+            File file = new File(filename);
+            file.getParentFile().mkdirs(); // create folders if they dont exist
+
+            // if file exists and doesnt end with newline, fix it first
+            // this prevents new entries being glued to the last line
+            if (file.exists() && file.length() > 0) {
+                java.io.RandomAccessFile raf = new java.io.RandomAccessFile(file, "r");
+                raf.seek(file.length() - 1);
+                byte lastByte = raf.readByte();
+                raf.close();
+                if (lastByte != '\n') {
+                    BufferedWriter fixer = new BufferedWriter(new FileWriter(file, true));
+                    fixer.newLine();
+                    fixer.close();
+                }
             }
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+            writer.write(data);
+            writer.newLine();
+            writer.close();
         } catch (IOException e) {
-            System.out.println("Error writing to file:" + e.getMessage());
+            System.out.println("Error writing to file: " + filename);
         }
     }
 
+    // overwrite the whole file with a new list of lines
+    public static void writeAll(String filename, List<String> lines) {
+        try {
+            File file = new File(filename);
+            file.getParentFile().mkdirs();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, false));
+            for (String line : lines) {
+                writer.write(line);
+                writer.newLine();
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + filename);
+        }
+    }
+
+    // delete a line where the first field (id) matches the given id
+    public static void deleteById(String filename, String id) {
+        List<String> lines = readAll(filename);
+        List<String> updated = new ArrayList<>();
+        for (String line : lines) {
+            if (!line.startsWith(id + "|")) {
+                updated.add(line);
+            }
+        }
+        writeAll(filename, updated);
+    }
+
+    // update a line where the first field (id) matches - replaces whole line
+    public static void updateById(String filename, String id, String newData) {
+        List<String> lines = readAll(filename);
+        List<String> updated = new ArrayList<>();
+        for (String line : lines) {
+            if (line.startsWith(id + "|")) {
+                updated.add(newData); // replace with new data
+            } else {
+                updated.add(line);
+            }
+        }
+        writeAll(filename, updated);
+    }
+
+    // generate next ID like CUS1, CUS2, CUS3 based on how many lines already in file
+    public static String generateId(String filename, String prefix) {
+        int count = readAll(filename).size() + 1;
+        return prefix + count;
+    }
+
+    // check if an id already exists in a file
+    public static boolean idExists(String filename, String id) {
+        List<String> lines = readAll(filename);
+        for (String line : lines) {
+            if (line.startsWith(id + "|")) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -1,91 +1,47 @@
 package models;
 
 public abstract class User {
-    private String userID;
+
+    private String userId;
     private String name;
     private String email;
     private String password;
     private String phone;
-    private boolean isBlocked;
-    private UserRole role;
+    private String role; // CUSTOMER, SCHEDULER, ADMIN, MANAGER
 
-    //Parameterized Constructor
-    public User(String userID, String name, String email, String password, String phone, boolean isBlocked, UserRole role) {
-        this.userID = userID;
+    public User(String userId, String name, String email, String password, String phone, String role) {
+        this.userId = userId;
         this.name = name;
         this.email = email;
         this.password = password;
         this.phone = phone;
-        this.isBlocked = false;
         this.role = role;
     }
 
-    //Getter and Setter for all the fields
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public boolean isBlocked() {
-        return isBlocked;
-    }
-
-    public void setBlocked(boolean blocked) {
-        isBlocked = blocked;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
-    }
-
-    // login and logout methods
-    public boolean login(String inputId, String inputPass) {
-        return this.userID.equals(inputId) && this.password.equals(inputPass);
-    }
+    // every user must implement their own login check
+    public abstract boolean login(String email, String password);
 
     public void logout() {
-        System.out.println(userID + "has logged off.");
+        System.out.println(name + " has logged out.");
     }
 
-    public abstract String toFileFormat();
+    // getters
+    public String getUserId() { return userId; }
+    public String getName() { return name; }
+    public String getEmail() { return email; }
+    public String getPassword() { return password; }
+    public String getPhone() { return phone; }
+    public String getRole() { return role; }
+
+    // setters
+    public void setName(String name) { this.name = name; }
+    public void setEmail(String email) { this.email = email; }
+    public void setPassword(String password) { this.password = password; }
+    public void setPhone(String phone) { this.phone = phone; }
+
+    // convert to a single line string to save into txt file
+    // format: userId|name|email|password|phone|role
+    public String toFileString() {
+        return userId + "|" + name + "|" + email + "|" + password + "|" + phone + "|" + role;
+    }
 }

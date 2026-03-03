@@ -6,53 +6,91 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserFileHandler extends FileHandler {
-    //To load users from users.txt ig
-    public List<User> loadUsers() {
-        List<User> userList = new ArrayList<>();
-        List<String> lines = FileHandler.readFromFile("users.txt");
 
+    private static final String USERS_FILE = "txt-data/users.txt";
+
+    // save any user to users.txt
+    public static void saveUser(User user) {
+        appendLine(USERS_FILE, user.toFileString());
+    }
+
+    // update existing user in users.txt
+    public static void updateUser(User user) {
+        updateById(USERS_FILE, user.getUserId(), user.toFileString());
+    }
+
+    // delete user by id
+    public static void deleteUser(String userId) {
+        deleteById(USERS_FILE, userId);
+    }
+
+    // get all customers
+    public static List<Customer> getAllCustomers() {
+        List<Customer> customers = new ArrayList<>();
+        List<String> lines = readAll(USERS_FILE);
+        for (String line : lines) {
+            if (line.contains("|CUSTOMER|")) {
+                customers.add(Customer.fromFileString(line));
+            }
+        }
+        return customers;
+    }
+
+    // get all schedulers
+    public static List<Scheduler> getAllSchedulers() {
+        List<Scheduler> schedulers = new ArrayList<>();
+        List<String> lines = readAll(USERS_FILE);
+        for (String line : lines) {
+            if (line.contains("|SCHEDULER|")) {
+                schedulers.add(Scheduler.fromFileString(line));
+            }
+        }
+        return schedulers;
+    }
+
+    // find a user by email and password for login - returns the role string or null
+    public static User loginUser(String email, String password) {
+        List<String> lines = readAll(USERS_FILE);
         for (String line : lines) {
             String[] parts = line.split("\\|");
-
-            UserRole role = UserRole.valueOf(parts[6]);
-
-            User user;
-            if (role == UserRole.ADMIN) {
-                String adminID = parts[7];
-                user = new Administrator(parts[0], parts[1], parts[2], parts[3], parts[4], Boolean.parseBoolean(parts[5]), role, adminID);
-            } else if (role == UserRole.CUSTOMER) {
-                String address = parts[7];
-                user = new Customer(parts[0], parts[1], parts[2], parts[3], parts[4], Boolean.parseBoolean(parts[5]), role, address);
-            } else if (role == UserRole.MANAGER) {
-                String managerID = parts[7];
-                user = new Manager(parts[0], parts[1], parts[2], parts[3], parts[4], Boolean.parseBoolean(parts[5]), role, managerID);
-            } else {
-                String staffID = parts[7];
-                user = new Scheduler(parts[0], parts[1], parts[2], parts[3], parts[4], Boolean.parseBoolean(parts[5]), role, staffID);
+            if (parts[2].equals(email) && parts[3].equals(password)) {
+                String role = parts[5];
+                if (role.equals("CUSTOMER")) return Customer.fromFileString(line);
+                if (role.equals("SCHEDULER")) return Scheduler.fromFileString(line);
+                if (role.equals("ADMIN")) return Administrator.fromFileString(line);
+                if (role.equals("MANAGER")) return Manager.fromFileString(line);
             }
-            userList.add(user);
         }
-        return userList;
+        return null; // login failed
     }
 
-    //Now we make smth to save the users we add
-    public void saveUsers(List<User> userList) {
-        List<String> lines = new ArrayList<>();
-
-        for (User user : userList) {
-            lines.add(user.toFileFormat());
+    // check if email already registered
+    public static boolean emailExists(String email) {
+        List<String> lines = readAll(USERS_FILE);
+        for (String line : lines) {
+            String[] parts = line.split("\\|");
+            if (parts[2].equals(email)) return true;
         }
-
-        FileHandler.writeToFile("users.txt", lines);
+        return false;
     }
 
-    //To authenticate our users
-    public User authenticate(String inputID, String inputPass) {
-        List<User> userList = loadUsers();
+    // find customer by id
+    public static Customer getCustomerById(String customerId) {
+        List<String> lines = readAll(USERS_FILE);
+        for (String line : lines) {
+            if (line.startsWith(customerId + "|") && line.contains("|CUSTOMER|")) {
+                return Customer.fromFileString(line);
+            }
+        }
+        return null;
+    }
 
-        for (User user : userList) {
-            if (user.login(inputID, inputPass)) {
-                return user;
+    // find scheduler by id
+    public static Scheduler getSchedulerById(String schedulerId) {
+        List<String> lines = readAll(USERS_FILE);
+        for (String line : lines) {
+            if (line.startsWith(schedulerId + "|") && line.contains("|SCHEDULER|")) {
+                return Scheduler.fromFileString(line);
             }
         }
         return null;
