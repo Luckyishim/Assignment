@@ -8,16 +8,18 @@ public class Booking {
     private String bookingID;
     private String customerID;
     private String hallID;
+    private LocalDateTime date;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     private double totalAmount;
     private String status;
 
     //Parameterized Constructor
-    public Booking(String bID, Customer customer, Hall hall, LocalDateTime start, LocalDateTime end) {
+    public Booking(String bID, Customer customer, Hall hall,LocalDateTime date ,LocalDateTime start, LocalDateTime end) {
         this.bookingID = bID;
         this.customerID = customer.getUserID();
         this.hallID = hall.getHallID();
+        this.date = date;
         this.startDateTime = start;
         this.endDateTime = end;
 
@@ -59,6 +61,15 @@ public class Booking {
     public void setStatus(String status){
         this.status = status;
     }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
     //Just in case they change time
     public void setTimes(LocalDateTime start, LocalDateTime end, double rate){
         this.startDateTime = start;
