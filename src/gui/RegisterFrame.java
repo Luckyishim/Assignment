@@ -111,7 +111,7 @@ public class RegisterFrame extends JFrame {
             return;
         }
 
-        String userId = FileHandler.generateId("data/users.txt", "CUS");
+        String userId = FileHandler.generateId("txt-data/users.txt", "CUS");
         Customer newCustomer = new Customer(userId, name, email, password, phone, address);
         UserFileHandler.saveUser(newCustomer);
 

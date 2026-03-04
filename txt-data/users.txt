@@ -1,6 +1,6 @@
-CUS1|Lucky|lucky@gmail.com|123456|9866046898|CUSTOMER|Maitidevi|false
-CUS2|Prabin|prabin@gmail.com|asdgh|0187654321|CUSTOMER|Jungle|false
-CUS4|Deuja|deuja@gmail.com|p789456|0187654321|CUSTOMER|Swayambhunath|false
 SCR1|Shital|shital@gmail.com|staffpass|0112233445|SCHEDULER|STF1
 ADM1|Prashant|admin@gmail.com|adminpass|0199999999|ADMIN|ADM1
 MGR1|Boss|boss@gmail.com|bosspass|0111111111|MANAGER|MGR1
+CUS1|Lucky|lucky@gmail.com|123456|9866046898|CUSTOMER|Maitidevi|false
+CUS2|Prabin|prabin@gmail.com|asdgh|0187654321|CUSTOMER|Jungle|false
+CUS4|Deuja|deuja@gmail.com|p789456|0187654321|CUSTOMER|Swayambhunath|false

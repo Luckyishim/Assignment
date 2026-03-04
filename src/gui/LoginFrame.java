@@ -45,13 +45,17 @@ public class LoginFrame extends JFrame {
         gc.fill = GridBagConstraints.HORIZONTAL;
 
         // Email label
-        gc.gridx = 0; gc.gridy = 0; gc.weightx = 0;
+        gc.gridx = 0;
+        gc.gridy = 0;
+        gc.weightx = 0;
         JLabel emailLabel = new JLabel("Email:");
         emailLabel.setFont(labelFont);
         form.add(emailLabel, gc);
 
         // Email field
-        gc.gridx = 1; gc.gridy = 0; gc.weightx = 1.0;
+        gc.gridx = 1;
+        gc.gridy = 0;
+        gc.weightx = 1.0;
         emailField = new JTextField();
         emailField.setFont(fieldFont);
         emailField.setBorder(fieldBorder);
@@ -59,13 +63,17 @@ public class LoginFrame extends JFrame {
         form.add(emailField, gc);
 
         // Password label
-        gc.gridx = 0; gc.gridy = 1; gc.weightx = 0;
+        gc.gridx = 0;
+        gc.gridy = 1;
+        gc.weightx = 0;
         JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setFont(labelFont);
         form.add(passwordLabel, gc);
 
         // Password field
-        gc.gridx = 1; gc.gridy = 1; gc.weightx = 1.0;
+        gc.gridx = 1;
+        gc.gridy = 1;
+        gc.weightx = 1.0;
         passwordField = new JPasswordField();
         passwordField.setFont(fieldFont);
         passwordField.setBorder(fieldBorder);
@@ -127,10 +135,18 @@ public class LoginFrame extends JFrame {
 
         dispose();
         switch (user.getRole()) {
-            case "CUSTOMER":  new CustomerDashboard((Customer) user);       break;
-            case "SCHEDULER": new SchedulerDashboard((Scheduler) user);     break;
-            case "ADMIN":     new AdminDashboard((Administrator) user);     break;
-            case "MANAGER":   new ManagerDashboard((Manager) user);         break;
+            case "CUSTOMER":
+                new CustomerDashboard((Customer) user);
+                break;
+            case "SCHEDULER":
+                new SchedulerDashboard((Scheduler) user);
+                break;
+            case "ADMIN":
+                new AdminDashboard((Administrator) user);
+                break;
+            case "MANAGER":
+                new ManagerDashboard((Manager) user);
+                break;
         }
     }
 }

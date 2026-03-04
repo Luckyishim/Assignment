@@ -64,7 +64,7 @@ public class PaymentFrame extends JFrame {
 
     private void handlePayment() {
         String method = (String) methodBox.getSelectedItem();
-        String paymentId = FileHandler.generateId("data/payments.txt", "PAY");
+        String paymentId = FileHandler.generateId("txt-data/payments.txt", "PAY");
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
         Payment payment = new Payment(paymentId, booking.getBookingId(),

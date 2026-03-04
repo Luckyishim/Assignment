@@ -105,7 +105,7 @@ public class HallScheduleFrame extends JFrame {
             }
 
             String hallId = halls.get(hallBox.getSelectedIndex()).getHallId();
-            String scheduleId = FileHandler.generateId("data/schedules.txt", "SCH");
+            String scheduleId = FileHandler.generateId("txt-data/schedules.txt", "SCH");
 
             HallSchedule schedule = new HallSchedule(scheduleId, hallId, type, start, end);
             HallFileHandler.saveSchedule(schedule);

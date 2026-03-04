@@ -113,7 +113,7 @@ public class SchedulerManagementFrame extends JFrame {
                 return;
             }
 
-            String userId = FileHandler.generateId("data/users.txt", "SCR");
+            String userId = FileHandler.generateId("txt-data/users.txt", "SCR");
             Scheduler s = new Scheduler(userId, staffId, name, email, pass, phone);
             UserFileHandler.saveUser(s);
             JOptionPane.showMessageDialog(this, "Scheduler added!");

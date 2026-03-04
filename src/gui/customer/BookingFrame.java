@@ -104,7 +104,7 @@ public class BookingFrame extends JFrame {
                 "Confirm Booking", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
-            String bookingId = FileHandler.generateId("data/bookings.txt", "BOK");
+            String bookingId = FileHandler.generateId("txt-data/bookings.txt", "BOK");
             // use booking date as the start date part
             String bookingDate = start.split(" ")[0];
             String startTime = start.split(" ")[1];

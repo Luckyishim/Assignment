@@ -81,7 +81,7 @@ public class IssueFrame extends JFrame {
         int selectedIndex = bookingBox.getSelectedIndex();
         Booking selected = confirmedBookings.get(selectedIndex);
 
-        String issueId = FileHandler.generateId("data/issues.txt", "ISS");
+        String issueId = FileHandler.generateId("txt-data/issues.txt", "ISS");
         Issue issue = new Issue(issueId, customer.getUserId(), selected.getBookingId(), description);
         BookingFileHandler.saveIssue(issue);
 

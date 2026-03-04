@@ -99,7 +99,7 @@ public class HallManagementFrame extends JFrame {
                 JOptionPane.showMessageDialog(this, "Hall name is required.");
                 return;
             }
-            String hallId = FileHandler.generateId("data/halls.txt", "HAL");
+            String hallId = FileHandler.generateId("txt-data/halls.txt", "HAL");
             Hall hall = new Hall(hallId, name, (String) typeBox.getSelectedItem());
             HallFileHandler.saveHall(hall);
             JOptionPane.showMessageDialog(this, "Hall added successfully!");

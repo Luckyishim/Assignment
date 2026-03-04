@@ -100,8 +100,21 @@ public class FileHandler {
 
     // generate next ID like CUS1, CUS2, CUS3 based on how many lines already in file
     public static String generateId(String filename, String prefix) {
-        int count = readAll(filename).size() + 1;
-        return prefix + count;
+        List<String> lines = readAll(filename);
+        int max = 0;
+        for (String line : lines) {
+            if (line.startsWith(prefix)) {
+                try {
+                    // extract the number part after the prefix e.g. "CUS3" -> 3
+                    String numberPart = line.split("\\|")[0].replace(prefix, "");
+                    int num = Integer.parseInt(numberPart);
+                    if (num > max) max = num;
+                } catch (NumberFormatException e) {
+                    // skip if cant parse
+                }
+            }
+        }
+        return prefix + (max + 1);
     }
 
     // check if an id already exists in a file
