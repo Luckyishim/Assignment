@@ -13,8 +13,8 @@ import java.awt.*;
 
 public class LoginFrame extends JFrame {
 
-    private JTextField emailField;
-    private JPasswordField passwordField;
+    private final JTextField emailField;
+    private final JPasswordField passwordField;
 
     public LoginFrame() {
         setTitle("Hall Booking System - Login");
@@ -74,19 +74,11 @@ public class LoginFrame extends JFrame {
 
         // route to correct dashboard based on role
         dispose();
-        switch (user.getRole()) {
-            case "CUSTOMER":
-                new CustomerDashboard((Customer) user);
-                break;
-            case "SCHEDULER":
-                new SchedulerDashboard((Scheduler) user);
-                break;
-            case "ADMIN":
-                new AdminDashboard((Administrator) user);
-                break;
-            case "MANAGER":
-                new ManagerDashboard((Manager) user);
-                break;
+        switch (UserRole.valueOf(user.getRole())) {
+            case CUSTOMER -> new CustomerDashboard((Customer) user);
+            case STAFF   -> new SchedulerDashboard((Scheduler) user);
+            case ADMIN -> new AdminDashboard((Administrator) user);
+            case MANAGER -> new ManagerDashboard((Manager) user);
         }
     }
 }

@@ -1,6 +1,7 @@
 package utils;
 
 import models.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,11 +54,21 @@ public class UserFileHandler extends FileHandler {
         for (String line : lines) {
             String[] parts = line.split("\\|");
             if (parts[2].equals(email) && parts[3].equals(password)) {
-                String role = parts[5];
-                if (role.equals("CUSTOMER")) return Customer.fromFileString(line);
-                if (role.equals("SCHEDULER")) return Scheduler.fromFileString(line);
-                if (role.equals("ADMIN")) return Administrator.fromFileString(line);
-                if (role.equals("MANAGER")) return Manager.fromFileString(line);
+                UserRole role = UserRole.valueOf(parts[5]); // converts "CUSTOMER" string to UserRole.CUSTOMER
+                switch (role) {
+                    case CUSTOMER -> {
+                        return Customer.fromFileString(line);
+                    }
+                    case STAFF -> {
+                        return Scheduler.fromFileString(line);
+                    }
+                    case ADMIN -> {
+                        return Administrator.fromFileString(line);
+                    }
+                    case MANAGER -> {
+                        return Manager.fromFileString(line);
+                    }
+                }
             }
         }
         // no match found - throw our custom exception

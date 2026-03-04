@@ -1,8 +1,6 @@
 package gui.manager;
 
-import models.Issue;
-import models.Manager;
-import models.Scheduler;
+import models.*;
 import utils.BookingFileHandler;
 import utils.UserFileHandler;
 
@@ -130,7 +128,12 @@ public class IssueManagementFrame extends JFrame {
         }
 
         Issue selected = issues.get(selectedRow);
-        String[] statusOptions = {"IN_PROGRESS", "DONE", "CLOSED", "CANCELLED"};
+        String[] statusOptions = {
+                IssueStatus.IN_PROGRESS.name(),
+                IssueStatus.DONE.name(),
+                IssueStatus.CLOSED.name(),
+                IssueStatus.CANCELLED.name()
+        };
 
         String choice = (String) JOptionPane.showInputDialog(this,
                 "Select new status:", "Change Status",
