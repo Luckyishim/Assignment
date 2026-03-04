@@ -8,8 +8,8 @@ import java.util.List;
 
 public class HallFileHandler extends FileHandler {
 
-    private static final String HALLS_FILE = "data/halls.txt";
-    private static final String SCHEDULES_FILE = "data/schedules.txt";
+    private static final String HALLS_FILE = "txt-data/halls.txt";
+    private static final String SCHEDULES_FILE = "txt-data/schedules.txt";
 
     // ---- HALL METHODS ----
 

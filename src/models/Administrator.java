@@ -2,7 +2,7 @@ package models;
 
 public class Administrator extends User {
 
-    private String adminId;
+    private final String adminId;
 
     public Administrator(String userId, String adminId, String name, String email, String password, String phone) {
         super(userId, name, email, password, phone, "ADMIN");
@@ -15,7 +15,9 @@ public class Administrator extends User {
     }
 
     // getters
-    public String getAdminId() { return adminId; }
+    public String getAdminId() {
+        return adminId;
+    }
 
     // format: userId|name|email|password|phone|role|adminId
     @Override

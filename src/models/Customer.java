@@ -17,12 +17,22 @@ public class Customer extends User {
     }
 
     // getters
-    public String getAddress() { return address; }
-    public boolean isBlocked() { return isBlocked; }
+    public String getAddress() {
+        return address;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
 
     // setters
-    public void setAddress(String address) { this.address = address; }
-    public void setBlocked(boolean blocked) { isBlocked = blocked; }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
 
     // format: userId|name|email|password|phone|role|address|isBlocked
     @Override

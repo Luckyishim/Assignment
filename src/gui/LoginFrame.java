@@ -76,7 +76,7 @@ public class LoginFrame extends JFrame {
         dispose();
         switch (UserRole.valueOf(user.getRole())) {
             case CUSTOMER -> new CustomerDashboard((Customer) user);
-            case STAFF   -> new SchedulerDashboard((Scheduler) user);
+            case SCHEDULER   -> new SchedulerDashboard((Scheduler) user);
             case ADMIN -> new AdminDashboard((Administrator) user);
             case MANAGER -> new ManagerDashboard((Manager) user);
         }

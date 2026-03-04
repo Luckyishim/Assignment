@@ -7,7 +7,7 @@ import java.util.List;
 
 public class UserFileHandler extends FileHandler {
 
-    private static final String USERS_FILE = "data/users.txt";
+    private static final String USERS_FILE = "txt-data/users.txt";
 
     // save any user to users.txt
     public static void saveUser(User user) {
@@ -48,7 +48,7 @@ public class UserFileHandler extends FileHandler {
         return schedulers;
     }
 
-    // throws InvalidLoginException if email or password dont match
+    // throws InvalidLoginException if email or password don't match
     public static User loginUser(String email, String password) throws InvalidLoginException {
         List<String> lines = readAll(USERS_FILE);
         for (String line : lines) {
@@ -59,7 +59,7 @@ public class UserFileHandler extends FileHandler {
                     case CUSTOMER -> {
                         return Customer.fromFileString(line);
                     }
-                    case STAFF -> {
+                    case SCHEDULER -> {
                         return Scheduler.fromFileString(line);
                     }
                     case ADMIN -> {

@@ -2,7 +2,7 @@ package models;
 
 public class Manager extends User {
 
-    private String managerId;
+    private final String managerId;
 
     public Manager(String userId, String managerId, String name, String email, String password, String phone) {
         super(userId, name, email, password, phone, "MANAGER");
@@ -15,7 +15,9 @@ public class Manager extends User {
     }
 
     // getters
-    public String getManagerId() { return managerId; }
+    public String getManagerId() {
+        return managerId;
+    }
 
     // format: userId|name|email|password|phone|role|managerId
     @Override
