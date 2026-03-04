@@ -16,7 +16,7 @@ public class RegisterFrame extends JFrame {
 
     public RegisterFrame() {
         setTitle("Register - Customer");
-        setSize(400, 380);
+        setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
