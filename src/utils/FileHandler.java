@@ -4,10 +4,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// base file handler - all other file handlers use these core methods
+// base file handler - all other file handlers uses the same methods from it
 public class FileHandler {
 
-    // read all lines from a file, returns empty list if file doesn't exist
+    // read all lines from a file and returns empty list if file doesn't exist
     public static List<String> readAll(String filename) {
         List<String> lines = new ArrayList<>();
         try {
@@ -32,11 +32,11 @@ public class FileHandler {
     public static void appendLine(String filename, String data) {
         try {
             File file = new File(filename);
-            file.getParentFile().mkdirs(); // create folders if they dont exist
+            file.getParentFile().mkdirs(); // create folders if they don't exist
 
-            // if file exists and doesnt end with newline, fix it first
-            // this prevents new entries being glued to the last line
+            // if file exists and doesn't end with newline, fix it first
             if (file.exists() && file.length() > 0) {
+                // to see if the file ends in a new line before appending
                 java.io.RandomAccessFile raf = new java.io.RandomAccessFile(file, "r");
                 raf.seek(file.length() - 1);
                 byte lastByte = raf.readByte();
@@ -47,7 +47,6 @@ public class FileHandler {
                     fixer.close();
                 }
             }
-
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
             writer.write(data);
             writer.newLine();

@@ -15,10 +15,14 @@ public class Scheduler extends User {
     }
 
     // getters
-    public String getStaffId() { return staffId; }
+    public String getStaffId() {
+        return staffId;
+    }
 
     // setters
-    public void setStaffId(String staffId) { this.staffId = staffId; }
+    public void setStaffId(String staffId) {
+        this.staffId = staffId;
+    }
 
     // format: userId|name|email|password|phone|role|staffId
     @Override

@@ -9,7 +9,6 @@ import gui.admin.AdminDashboard;
 import gui.manager.ManagerDashboard;
 
 import javax.swing.*;
-import javax.swing.border.*;
 import java.awt.*;
 
 public class LoginFrame extends JFrame {
@@ -22,73 +21,20 @@ public class LoginFrame extends JFrame {
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setResizable(false);
+        setLayout(new GridLayout(5, 2, 10, 10));
 
-        Font labelFont = new Font("SansSerif", Font.BOLD, 13);
-        Font fieldFont = new Font("SansSerif", Font.PLAIN, 13);
-        Font buttonFont = new Font("SansSerif", Font.BOLD, 13);
-
-        Border fieldBorder = BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(180, 180, 180), 1, true),
-                BorderFactory.createEmptyBorder(4, 8, 4, 8)
-        );
-
-        // Outer panel with padding
-        JPanel outer = new JPanel(new BorderLayout());
-        outer.setBorder(BorderFactory.createEmptyBorder(24, 32, 24, 32));
-        setContentPane(outer);
-
-        // Form rows panel
-        JPanel form = new JPanel(new GridBagLayout());
-        GridBagConstraints gc = new GridBagConstraints();
-        gc.insets = new Insets(6, 4, 6, 4);
-        gc.fill = GridBagConstraints.HORIZONTAL;
-
-        // Email label
-        gc.gridx = 0; gc.gridy = 0; gc.weightx = 0;
-        JLabel emailLabel = new JLabel("Email:");
-        emailLabel.setFont(labelFont);
-        form.add(emailLabel, gc);
-
-        // Email field
-        gc.gridx = 1; gc.gridy = 0; gc.weightx = 1.0;
+        add(new JLabel("  Email:"));
         emailField = new JTextField();
-        emailField.setFont(fieldFont);
-        emailField.setBorder(fieldBorder);
-        emailField.setPreferredSize(new Dimension(0, 30));
-        form.add(emailField, gc);
+        add(emailField);
 
-        // Password label
-        gc.gridx = 0; gc.gridy = 1; gc.weightx = 0;
-        JLabel passwordLabel = new JLabel("Password:");
-        passwordLabel.setFont(labelFont);
-        form.add(passwordLabel, gc);
-
-        // Password field
-        gc.gridx = 1; gc.gridy = 1; gc.weightx = 1.0;
+        add(new JLabel("  Password:"));
         passwordField = new JPasswordField();
-        passwordField.setFont(fieldFont);
-        passwordField.setBorder(fieldBorder);
-        passwordField.setPreferredSize(new Dimension(0, 30));
-        form.add(passwordField, gc);
-
-        outer.add(form, BorderLayout.CENTER);
-
-        // Button row
-        JPanel buttons = new JPanel(new GridLayout(1, 2, 10, 0));
-        buttons.setBorder(BorderFactory.createEmptyBorder(12, 0, 0, 0));
+        add(passwordField);
 
         JButton loginBtn = new JButton("Login");
-        loginBtn.setFont(buttonFont);
-        loginBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
         JButton registerBtn = new JButton("Register (Customer)");
-        registerBtn.setFont(buttonFont);
-        registerBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-        buttons.add(loginBtn);
-        buttons.add(registerBtn);
-        outer.add(buttons, BorderLayout.SOUTH);
+        add(loginBtn);
+        add(registerBtn);
 
         loginBtn.addActionListener(e -> handleLogin());
         registerBtn.addActionListener(e -> {
@@ -96,7 +42,6 @@ public class LoginFrame extends JFrame {
             new RegisterFrame();
         });
 
-        getRootPane().setDefaultButton(loginBtn);
         setVisible(true);
     }
 
@@ -117,6 +62,8 @@ public class LoginFrame extends JFrame {
             return;
         }
 
+
+        // check if customer is blocked
         if (user instanceof Customer) {
             Customer c = (Customer) user;
             if (c.isBlocked()) {
@@ -125,12 +72,21 @@ public class LoginFrame extends JFrame {
             }
         }
 
+        // route to correct dashboard based on role
         dispose();
         switch (user.getRole()) {
-            case "CUSTOMER":  new CustomerDashboard((Customer) user);       break;
-            case "SCHEDULER": new SchedulerDashboard((Scheduler) user);     break;
-            case "ADMIN":     new AdminDashboard((Administrator) user);     break;
-            case "MANAGER":   new ManagerDashboard((Manager) user);         break;
+            case "CUSTOMER":
+                new CustomerDashboard((Customer) user);
+                break;
+            case "SCHEDULER":
+                new SchedulerDashboard((Scheduler) user);
+                break;
+            case "ADMIN":
+                new AdminDashboard((Administrator) user);
+                break;
+            case "MANAGER":
+                new ManagerDashboard((Manager) user);
+                break;
         }
     }
 }

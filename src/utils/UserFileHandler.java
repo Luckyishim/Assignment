@@ -1,12 +1,13 @@
 package utils;
 
 import models.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserFileHandler extends FileHandler {
 
-    private static final String USERS_FILE = "data/users.txt";
+    private static final String USERS_FILE = "txt-data/users.txt";
 
     // save any user to users.txt
     public static void saveUser(User user) {
@@ -47,17 +48,27 @@ public class UserFileHandler extends FileHandler {
         return schedulers;
     }
 
-    // throws InvalidLoginException if email or password dont match
+    // throws InvalidLoginException if email or password don't match
     public static User loginUser(String email, String password) throws InvalidLoginException {
         List<String> lines = readAll(USERS_FILE);
         for (String line : lines) {
             String[] parts = line.split("\\|");
             if (parts[2].equals(email) && parts[3].equals(password)) {
-                String role = parts[5];
-                if (role.equals("CUSTOMER")) return Customer.fromFileString(line);
-                if (role.equals("SCHEDULER")) return Scheduler.fromFileString(line);
-                if (role.equals("ADMIN")) return Administrator.fromFileString(line);
-                if (role.equals("MANAGER")) return Manager.fromFileString(line);
+                UserRole role = UserRole.valueOf(parts[5]); // converts "CUSTOMER" string to UserRole.CUSTOMER
+                switch (role) {
+                    case CUSTOMER -> {
+                        return Customer.fromFileString(line);
+                    }
+                    case SCHEDULER -> {
+                        return Scheduler.fromFileString(line);
+                    }
+                    case ADMIN -> {
+                        return Administrator.fromFileString(line);
+                    }
+                    case MANAGER -> {
+                        return Manager.fromFileString(line);
+                    }
+                }
             }
         }
         // no match found - throw our custom exception

@@ -2,10 +2,10 @@ package models;
 
 public class Issue {
 
-    private String issueId;
-    private String customerId;
-    private String bookingId;
-    private String description;
+    private final String issueId;
+    private final String customerId;
+    private final String bookingId;
+    private final String description;
     private String managerResponse;
     private String assignedSchedulerId;
     private String status; // IN_PROGRESS, DONE, CLOSED, CANCELLED
@@ -17,27 +17,54 @@ public class Issue {
         this.description = description;
         this.managerResponse = "No response yet";
         this.assignedSchedulerId = "None";
-        this.status = "IN_PROGRESS";
+        this.status = IssueStatus.IN_PROGRESS.name();
     }
 
     // getters
-    public String getIssueId() { return issueId; }
-    public String getCustomerId() { return customerId; }
-    public String getBookingId() { return bookingId; }
-    public String getDescription() { return description; }
-    public String getManagerResponse() { return managerResponse; }
-    public String getAssignedSchedulerId() { return assignedSchedulerId; }
-    public String getStatus() { return status; }
+    public String getIssueId() {
+        return issueId;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getManagerResponse() {
+        return managerResponse;
+    }
+
+    public String getAssignedSchedulerId() {
+        return assignedSchedulerId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
 
     // setters
-    public void setManagerResponse(String managerResponse) { this.managerResponse = managerResponse; }
-    public void setAssignedSchedulerId(String assignedSchedulerId) { this.assignedSchedulerId = assignedSchedulerId; }
-    public void setStatus(String status) { this.status = status; }
+    public void setManagerResponse(String managerResponse) {
+        this.managerResponse = managerResponse;
+    }
+
+    public void setAssignedSchedulerId(String assignedSchedulerId) {
+        this.assignedSchedulerId = assignedSchedulerId;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     // format: issueId|customerId|bookingId|description|managerResponse|assignedSchedulerId|status
     public String toFileString() {
-        return issueId + "|" + customerId + "|" + bookingId + "|" + description + "|" +
-                managerResponse + "|" + assignedSchedulerId + "|" + status;
+        return issueId + "|" + customerId + "|" + bookingId + "|" + description + "|" + managerResponse + "|" + assignedSchedulerId + "|" + status;
     }
 
     // rebuild Issue object from a line in issues.txt
