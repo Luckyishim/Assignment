@@ -36,10 +36,12 @@ public class Booking {
         return daysUntil >= 3;
     }
 
-    public void cancel() {
-        if (isCancellable()) {
-            this.status = "CANCELLED";
+    // now throws InvalidBookingException instead of silently doing nothing
+    public void cancel() throws InvalidBookingException {
+        if (!isCancellable()) {
+            throw new InvalidBookingException("Cannot cancel — booking must be at least 3 days away.");
         }
+        this.status = "CANCELLED";
     }
 
     // getters

@@ -7,16 +7,14 @@ public class HallSchedule {
     private String scheduleType; // AVAILABILITY or MAINTENANCE
     private String startDateTime; // stored as string "dd-MM-yyyy HH:mm"
     private String endDateTime;
-    private String remarks;
 
     public HallSchedule(String scheduleId, String hallId, String scheduleType,
-                        String startDateTime, String endDateTime, String remarks) {
+                        String startDateTime, String endDateTime) {
         this.scheduleId = scheduleId;
         this.hallId = hallId;
         this.scheduleType = scheduleType;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
-        this.remarks = remarks;
     }
 
     // getters
@@ -25,21 +23,19 @@ public class HallSchedule {
     public String getScheduleType() { return scheduleType; }
     public String getStartDateTime() { return startDateTime; }
     public String getEndDateTime() { return endDateTime; }
-    public String getRemarks() { return remarks; }
 
     // setters
     public void setStartDateTime(String startDateTime) { this.startDateTime = startDateTime; }
     public void setEndDateTime(String endDateTime) { this.endDateTime = endDateTime; }
-    public void setRemarks(String remarks) { this.remarks = remarks; }
 
-    // format: scheduleId|hallId|scheduleType|startDateTime|endDateTime|remarks
+    // format: scheduleId|hallId|scheduleType|startDateTime|endDateTime
     public String toFileString() {
-        return scheduleId + "|" + hallId + "|" + scheduleType + "|" + startDateTime + "|" + endDateTime + "|" + remarks;
+        return scheduleId + "|" + hallId + "|" + scheduleType + "|" + startDateTime + "|" + endDateTime;
     }
 
     // rebuild HallSchedule object from a line in schedules.txt
     public static HallSchedule fromFileString(String line) {
         String[] parts = line.split("\\|");
-        return new HallSchedule(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]);
+        return new HallSchedule(parts[0], parts[1], parts[2], parts[3], parts[4]);
     }
 }

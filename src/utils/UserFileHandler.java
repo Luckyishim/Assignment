@@ -1,13 +1,12 @@
 package utils;
 
 import models.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserFileHandler extends FileHandler {
 
-    private static final String USERS_FILE = "txt-data/users.txt";
+    private static final String USERS_FILE = "data/users.txt";
 
     // save any user to users.txt
     public static void saveUser(User user) {
@@ -48,8 +47,8 @@ public class UserFileHandler extends FileHandler {
         return schedulers;
     }
 
-    // find a user by email and password for login - returns the role string or null
-    public static User loginUser(String email, String password) {
+    // throws InvalidLoginException if email or password dont match
+    public static User loginUser(String email, String password) throws InvalidLoginException {
         List<String> lines = readAll(USERS_FILE);
         for (String line : lines) {
             String[] parts = line.split("\\|");
@@ -61,7 +60,8 @@ public class UserFileHandler extends FileHandler {
                 if (role.equals("MANAGER")) return Manager.fromFileString(line);
             }
         }
-        return null; // login failed
+        // no match found - throw our custom exception
+        throw new InvalidLoginException("Invalid email or password. Please try again.");
     }
 
     // check if email already registered

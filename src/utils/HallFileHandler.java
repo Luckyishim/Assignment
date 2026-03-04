@@ -1,15 +1,15 @@
 package utils;
 
-
 import models.Hall;
+import models.HallNotFoundException;
 import models.HallSchedule;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HallFileHandler extends FileHandler {
 
-    private static final String HALLS_FILE = "txt-data/halls.txt";
-    private static final String SCHEDULES_FILE = "txt-data/schedules.txt";
+    private static final String HALLS_FILE = "data/halls.txt";
+    private static final String SCHEDULES_FILE = "data/schedules.txt";
 
     // ---- HALL METHODS ----
 
@@ -34,14 +34,16 @@ public class HallFileHandler extends FileHandler {
         return halls;
     }
 
-    public static Hall getHallById(String hallId) {
+    // throws HallNotFoundException if hall ID doesnt exist
+    public static Hall getHallById(String hallId) throws HallNotFoundException {
         List<String> lines = readAll(HALLS_FILE);
         for (String line : lines) {
             if (line.startsWith(hallId + "|")) {
                 return Hall.fromFileString(line);
             }
         }
-        return null;
+        // hall not found - throw our custom exception
+        throw new HallNotFoundException("Hall with ID " + hallId + " was not found.");
     }
 
     // filter halls by type
@@ -78,18 +80,6 @@ public class HallFileHandler extends FileHandler {
         return schedules;
     }
 
-    // get all availability schedules for a specific hall
-    public static List<HallSchedule> getAvailableSchedulesByHall(String hallId) {
-        List<HallSchedule> result = new ArrayList<>();
-        for (HallSchedule s : getAllSchedules()) {
-            if (s.getHallId().equals(hallId) && s.getScheduleType().equals("AVAILABILITY")) {
-                result.add(s);
-            }
-        }
-        return result;
-    }
-
-    // get all schedules of type AVAILABILITY (for customer to view)
     public static List<HallSchedule> getAllAvailableSchedules() {
         List<HallSchedule> result = new ArrayList<>();
         for (HallSchedule s : getAllSchedules()) {

@@ -1,6 +1,7 @@
 package gui.customer;
 
 import models.*;
+import models.InvalidBookingException;
 import utils.BookingFileHandler;
 import utils.FileHandler;
 
@@ -47,9 +48,13 @@ public class PaymentFrame extends JFrame {
 
         payBtn.addActionListener(e -> handlePayment());
         cancelBtn.addActionListener(e -> {
-            // cancel the booking if they back out
-            booking.cancel();
-            BookingFileHandler.updateBooking(booking);
+            try {
+                booking.cancel(); // throws InvalidBookingException if not cancellable
+                BookingFileHandler.updateBooking(booking);
+            } catch (InvalidBookingException ex) {
+                // even if not cancellable just go back to dashboard
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
             dispose();
             new CustomerDashboard(customer);
         });

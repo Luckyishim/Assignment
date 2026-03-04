@@ -22,13 +22,13 @@ public class HallScheduleFrame extends JFrame {
         this.scheduler = scheduler;
 
         setTitle("Hall Schedule Management");
-        setSize(800, 450);
+        setSize(750, 450);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
         // table
-        String[] cols = {"Schedule ID", "Hall ID", "Type", "Start", "End", "Remarks"};
+        String[] cols = {"Schedule ID", "Hall ID", "Type", "Start", "End"};
         tableModel = new DefaultTableModel(cols, 0);
         table = new JTable(tableModel);
         add(new JScrollPane(table), BorderLayout.CENTER);
@@ -65,13 +65,12 @@ public class HallScheduleFrame extends JFrame {
         for (HallSchedule s : schedules) {
             tableModel.addRow(new Object[]{
                     s.getScheduleId(), s.getHallId(), s.getScheduleType(),
-                    s.getStartDateTime(), s.getEndDateTime(), s.getRemarks()
+                    s.getStartDateTime(), s.getEndDateTime()
             });
         }
     }
 
     private void showAddDialog(String type) {
-        // build hall dropdown from existing halls
         List<Hall> halls = HallFileHandler.getAllHalls();
         if (halls.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No halls found. Please add halls first.");
@@ -86,23 +85,19 @@ public class HallScheduleFrame extends JFrame {
         JComboBox<String> hallBox = new JComboBox<>(hallOptions);
         JTextField startField = new JTextField("dd-MM-yyyy HH:mm");
         JTextField endField = new JTextField("dd-MM-yyyy HH:mm");
-        JTextField remarksField = new JTextField("Optional remarks");
 
-        JPanel panel = new JPanel(new GridLayout(4, 2, 5, 5));
+        JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
         panel.add(new JLabel("Select Hall:"));
         panel.add(hallBox);
         panel.add(new JLabel("Start (dd-MM-yyyy HH:mm):"));
         panel.add(startField);
         panel.add(new JLabel("End (dd-MM-yyyy HH:mm):"));
         panel.add(endField);
-        panel.add(new JLabel("Remarks:"));
-        panel.add(remarksField);
 
         int result = JOptionPane.showConfirmDialog(this, panel, "Add " + type + " Schedule", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             String start = startField.getText().trim();
             String end = endField.getText().trim();
-            String remarks = remarksField.getText().trim();
 
             if (start.isEmpty() || end.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Start and end date/time are required.");
@@ -112,7 +107,7 @@ public class HallScheduleFrame extends JFrame {
             String hallId = halls.get(hallBox.getSelectedIndex()).getHallId();
             String scheduleId = FileHandler.generateId("data/schedules.txt", "SCH");
 
-            HallSchedule schedule = new HallSchedule(scheduleId, hallId, type, start, end, remarks);
+            HallSchedule schedule = new HallSchedule(scheduleId, hallId, type, start, end);
             HallFileHandler.saveSchedule(schedule);
             JOptionPane.showMessageDialog(this, type + " schedule added!");
             loadSchedules();

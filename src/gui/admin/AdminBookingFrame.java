@@ -1,6 +1,7 @@
 package gui.admin;
 
 import models.Administrator;
+import models.HallNotFoundException;
 import models.Booking;
 import utils.BookingFileHandler;
 import utils.HallFileHandler;
@@ -59,9 +60,11 @@ public class AdminBookingFrame extends JFrame {
         List<Booking> bookings = BookingFileHandler.getAllBookings();
         for (Booking b : bookings) {
             if (!filter.equals("ALL") && !b.getStatus().equals(filter)) continue;
-            String hallName = b.getHallId();
-            if (HallFileHandler.getHallById(b.getHallId()) != null) {
+            String hallName;
+            try {
                 hallName = HallFileHandler.getHallById(b.getHallId()).getHallName();
+            } catch (HallNotFoundException ex) {
+                hallName = b.getHallId(); // fallback to ID if hall not found
             }
             tableModel.addRow(new Object[]{
                     b.getBookingId(), b.getCustomerId(), hallName,

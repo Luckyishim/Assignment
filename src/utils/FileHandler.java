@@ -7,7 +7,7 @@ import java.util.List;
 // base file handler - all other file handlers use these core methods
 public class FileHandler {
 
-    // read all lines from a file, returns empty list if file doesnt exist
+    // read all lines from a file, returns empty list if file doesn't exist
     public static List<String> readAll(String filename) {
         List<String> lines = new ArrayList<>();
         try {

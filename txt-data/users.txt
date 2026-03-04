@@ -3,3 +3,4 @@ CUS2|Sarah|sarah@gmail.com|password1|0187654321|CUSTOMER|Petaling Jaya|false
 SCR1|John|john@gmail.com|staffpass|0112233445|SCHEDULER|STF1
 ADM1|Admin|admin@gmail.com|adminpass|0199999999|ADMIN|ADM1
 MGR1|Boss|boss@gmail.com|bosspass|0111111111|MANAGER|MGR1
+CUS1|Lucky|lucky@gmail.com|123456|9866046898|CUSTOMER|Maitidevi|false

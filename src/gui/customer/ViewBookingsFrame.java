@@ -1,6 +1,8 @@
 package gui.customer;
 
 import models.*;
+import models.InvalidBookingException;
+import models.HallNotFoundException;
 import utils.BookingFileHandler;
 import utils.HallFileHandler;
 
@@ -69,8 +71,13 @@ public class ViewBookingsFrame extends JFrame {
         for (Booking b : bookings) {
             if (!filter.equals("ALL") && !b.getStatus().equals(filter)) continue;
 
-            Hall hall = HallFileHandler.getHallById(b.getHallId());
-            String hallName = hall != null ? hall.getHallName() : b.getHallId();
+            String hallName;
+            try {
+                Hall hall = HallFileHandler.getHallById(b.getHallId());
+                hallName = hall.getHallName();
+            } catch (HallNotFoundException ex) {
+                hallName = b.getHallId(); // fallback to just showing the ID
+            }
 
             tableModel.addRow(new Object[]{
                     b.getBookingId(),
@@ -98,20 +105,19 @@ public class ViewBookingsFrame extends JFrame {
             return;
         }
 
-        if (!selected.isCancellable()) {
-            JOptionPane.showMessageDialog(this, "Cancellation must be at least 3 days before the booking date.");
-            return;
-        }
-
         int confirm = JOptionPane.showConfirmDialog(this,
                 "Are you sure you want to cancel this booking?",
                 "Confirm Cancel", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
-            selected.cancel();
-            BookingFileHandler.updateBooking(selected);
-            JOptionPane.showMessageDialog(this, "Booking cancelled successfully.");
-            loadBookings("ALL");
+            try {
+                selected.cancel(); // throws InvalidBookingException if less than 3 days away
+                BookingFileHandler.updateBooking(selected);
+                JOptionPane.showMessageDialog(this, "Booking cancelled successfully.");
+                loadBookings("ALL");
+            } catch (InvalidBookingException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
         }
     }
 }

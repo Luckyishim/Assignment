@@ -1,6 +1,7 @@
 package gui;
 
 import models.*;
+import models.InvalidLoginException;
 import utils.UserFileHandler;
 import gui.customer.CustomerDashboard;
 import gui.scheduler.SchedulerDashboard;
@@ -53,12 +54,14 @@ public class LoginFrame extends JFrame {
             return;
         }
 
-        User user = UserFileHandler.loginUser(email, password);
-
-        if (user == null) {
-            JOptionPane.showMessageDialog(this, "Invalid email or password.");
+        User user = null;
+        try {
+            user = UserFileHandler.loginUser(email, password);
+        } catch (InvalidLoginException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             return;
         }
+
 
         // check if customer is blocked
         if (user instanceof Customer) {

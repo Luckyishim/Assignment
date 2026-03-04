@@ -1,6 +1,7 @@
 package gui.customer;
 
 import models.*;
+import models.HallNotFoundException;
 import utils.BookingFileHandler;
 import utils.FileHandler;
 import utils.HallFileHandler;
@@ -12,9 +13,9 @@ import java.util.List;
 
 public class BookingFrame extends JFrame {
 
-    private Customer customer;
-    private JTable table;
-    private DefaultTableModel tableModel;
+    private final Customer customer;
+    private final JTable table;
+    private final DefaultTableModel tableModel;
     private List<HallSchedule> schedules;
 
     public BookingFrame(Customer customer) {
@@ -27,7 +28,7 @@ public class BookingFrame extends JFrame {
         setLayout(new BorderLayout(10, 10));
 
         // table to show available halls
-        String[] columns = {"Schedule ID", "Hall ID", "Hall Name", "Type", "Capacity", "Rate/hr", "From", "To", "Remarks"};
+        String[] columns = {"Schedule ID", "Hall ID", "Hall Name", "Type", "Capacity", "Rate/hr", "From", "To"};
         tableModel = new DefaultTableModel(columns, 0);
         table = new JTable(tableModel);
         loadAvailableHalls();
@@ -55,8 +56,8 @@ public class BookingFrame extends JFrame {
         tableModel.setRowCount(0);
         schedules = HallFileHandler.getAllAvailableSchedules();
         for (HallSchedule s : schedules) {
-            Hall hall = HallFileHandler.getHallById(s.getHallId());
-            if (hall != null) {
+            try {
+                Hall hall = HallFileHandler.getHallById(s.getHallId());
                 tableModel.addRow(new Object[]{
                         s.getScheduleId(),
                         hall.getHallId(),
@@ -65,9 +66,10 @@ public class BookingFrame extends JFrame {
                         hall.getCapacity(),
                         "RM " + hall.getRatePerHour(),
                         s.getStartDateTime(),
-                        s.getEndDateTime(),
-                        s.getRemarks()
+                        s.getEndDateTime()
                 });
+            } catch (HallNotFoundException ex) {
+                // skip this schedule if hall no longer exists
             }
         }
     }
@@ -80,7 +82,13 @@ public class BookingFrame extends JFrame {
         }
 
         HallSchedule selected = schedules.get(selectedRow);
-        Hall hall = HallFileHandler.getHallById(selected.getHallId());
+        Hall hall;
+        try {
+            hall = HallFileHandler.getHallById(selected.getHallId());
+        } catch (HallNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+            return;
+        }
 
         // calculate hours and total
         // startDateTime and endDateTime format: "dd-MM-yyyy HH:mm"
