@@ -4,3 +4,4 @@ MGR1|Boss|boss@gmail.com|bosspass|0111111111|MANAGER|MGR1
 CUS1|Lucky|lucky@gmail.com|123456|9866046898|CUSTOMER|Maitidevi|false
 CUS2|Prabin|prabin@gmail.com|asdgh|0187654321|CUSTOMER|Jungle|false
 CUS4|Deuja|deuja@gmail.com|p789456|0187654321|CUSTOMER|Swayambhunath|false
+CUS5|Pp|p@mail.com|123456|123456|CUSTOMER|hvgc|false
