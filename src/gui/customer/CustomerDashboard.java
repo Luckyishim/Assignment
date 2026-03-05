@@ -53,6 +53,8 @@ public class CustomerDashboard extends JFrame {
         });
 
         logoutBtn.addActionListener(e -> {
+            customer.logout();
+            JOptionPane.showMessageDialog(this, customer.getName() + " has logged out successfully.");
             dispose();
             new LoginFrame();
         });

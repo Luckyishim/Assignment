@@ -41,9 +41,12 @@ public class SchedulerDashboard extends JFrame {
         });
 
         logoutBtn.addActionListener(e -> {
+            scheduler.logout();
+            JOptionPane.showMessageDialog(this, scheduler.getName() + " has logged out successfully.");
             dispose();
             new LoginFrame();
         });
+
 
         setVisible(true);
     }

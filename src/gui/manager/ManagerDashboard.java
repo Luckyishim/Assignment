@@ -41,6 +41,8 @@ public class ManagerDashboard extends JFrame {
         });
 
         logoutBtn.addActionListener(e -> {
+            manager.logout();
+            JOptionPane.showMessageDialog(this, manager.getName() + " has logged out successfully.");
             dispose();
             new LoginFrame();
         });

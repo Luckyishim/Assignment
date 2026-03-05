@@ -47,9 +47,12 @@ public class AdminDashboard extends JFrame {
         });
 
         logoutBtn.addActionListener(e -> {
+            admin.logout();
+            JOptionPane.showMessageDialog(this, admin.getName() + " has logged out successfully.");
             dispose();
             new LoginFrame();
         });
+
 
         setVisible(true);
     }
