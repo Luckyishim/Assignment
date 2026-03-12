@@ -8,10 +8,9 @@ import java.awt.*;
 
 public class AdminDashboard extends JFrame {
 
-    private Administrator admin;
 
     public AdminDashboard(Administrator admin) {
-        this.admin = admin;
+
 
         setTitle("Admin Dashboard - " + admin.getName());
         setSize(400, 350);

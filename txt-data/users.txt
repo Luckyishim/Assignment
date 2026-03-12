@@ -1,7 +1,8 @@
 SCR1|Shital|scr1@gmail.com|staffpass|9745200331|SCHEDULER|STF1
-SCR2|Anushka|scr2@gmail.com|staffpass|9845671200|SCHEDULER|STF1
+SCR2|Anushka|scr2@gmail.com|staffpass|9845671200|SCHEDULER|STF2
 ADM1|Prabin|admin@gmail.com|adminpass|9765482001|ADMIN|ADM1
 MGR1|Lucky|manage@gmail.com|bosspass|9840970723|MANAGER|MGR1
 CUS1|Prashant|deuja@gmail.com|123456|9707494769|CUSTOMER|Swayambhunath|false
 CUS2|Basanti|basanti@gmail.com|987654|9866046898|CUSTOMER|Bhaktapur|false
 CUS3|Shruti|shruti@gmail.com|asdgh|9605245330|CUSTOMER|Baneshwor|false
+CUS4|Rajita|kali@gmail.com|123456|9840252511|CUSTOMER|Bhaktapur|false
